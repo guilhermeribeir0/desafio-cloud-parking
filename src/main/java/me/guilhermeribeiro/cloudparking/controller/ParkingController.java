@@ -4,6 +4,7 @@ import me.guilhermeribeiro.cloudparking.controller.dto.ParkingDTO;
 import me.guilhermeribeiro.cloudparking.controller.mapper.ParkingMapper;
 import me.guilhermeribeiro.cloudparking.model.Parking;
 import me.guilhermeribeiro.cloudparking.service.ParkingService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,10 +25,10 @@ public class ParkingController {
     }
 
     @GetMapping
-    public List<ParkingDTO> findAll() {
+    public ResponseEntity<List<ParkingDTO>> findAll() {
         List<Parking> parkingList = parkingService.findAll();
         List<ParkingDTO> result = parkingMapper.toParkingDTOList(parkingList);
-        return result;
+        return ResponseEntity.ok(result);
     }
 
 }
