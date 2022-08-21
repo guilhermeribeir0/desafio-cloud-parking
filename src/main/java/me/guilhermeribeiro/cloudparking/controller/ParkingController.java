@@ -1,5 +1,7 @@
 package me.guilhermeribeiro.cloudparking.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import me.guilhermeribeiro.cloudparking.controller.dto.ParkingCreateDTO;
 import me.guilhermeribeiro.cloudparking.controller.dto.ParkingDTO;
 import me.guilhermeribeiro.cloudparking.controller.mapper.ParkingMapper;
@@ -13,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/parking")
+@Api(tags = "Parking Controller")
 public class ParkingController {
 
     private final ParkingService parkingService;
@@ -25,6 +28,7 @@ public class ParkingController {
     }
 
     @GetMapping
+    @ApiOperation("Find all parkings")
     public ResponseEntity<List<ParkingDTO>> findAll() {
         List<Parking> parkingList = parkingService.findAll();
         List<ParkingDTO> result = parkingMapper.toParkingDTOList(parkingList);
@@ -32,6 +36,7 @@ public class ParkingController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Find by id parking")
     public ResponseEntity<ParkingDTO> findById(@PathVariable String id) {
         Parking parking = parkingService.findById(id);
         ParkingDTO result = parkingMapper.toParkingDTO(parking);
@@ -39,6 +44,7 @@ public class ParkingController {
     }
 
     @PostMapping
+    @ApiOperation("Create parking")
     public ResponseEntity<ParkingDTO> create(@RequestBody ParkingCreateDTO dto) {
         var parkingCreate = parkingMapper.toParkingCreate(dto);
         Parking parking = parkingService.create(parkingCreate);
